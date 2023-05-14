@@ -22,5 +22,11 @@ python xml_split.py \
 ls biosample_set \
     | grep "\.xml$" \
     | sed "s/.xml//g" \
-    | python xml2json.py -s biosample.xsd -o biosample_set/{}.json biosample_set/{}.xml
+    | parallel -j40 python xml2json.py -s biosample.xsd -o biosample_set_json/{}.json biosample_set/{}.xml
+
+cd biosample_set_json
+ls *.json | parallel 'sed "s/\"$\":/\"value\":/g" {} > {}.mod'
+ls *.json | parallel 'rm {}'
+ls *.json.mod | sed "s/.json.mod//g" | parallel mv {}.json.mod {}.json
+cd ..
 

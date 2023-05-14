@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="PackageSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Package"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Package">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Project"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Project">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ProjectID"/>
+        <xs:element ref="ProjectDescr"/>
+        <xs:element ref="ProjectType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ArchiveID"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="SecondaryArchiveID"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CenterID"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LocalID"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ArchiveID">
+    <xs:complexType>
+      <xs:attribute name="accession" use="required" type="xs:NCName"/>
+      <xs:attribute name="archive" use="required" type="xs:NCName"/>
+      <xs:attribute name="id" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SecondaryArchiveID">
+    <xs:complexType>
+      <xs:attribute name="accession" use="required" type="xs:NCName"/>
+      <xs:attribute name="archive" use="required" type="xs:NCName"/>
+      <xs:attribute name="id" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CenterID">
+    <xs:complexType mixed="true">
+      <xs:attribute name="center" use="required"/>
+      <xs:attribute name="id" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LocalID">
+    <xs:complexType mixed="true">
+      <xs:attribute name="submission_id"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectDescr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Name"/>
+        <xs:element ref="Title"/>
+        <xs:element minOccurs="0" ref="Description"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ExternalLink"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Grant"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Publication"/>
+        <xs:element minOccurs="0" ref="ProjectReleaseDate"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Keyword"/>
+        <xs:element minOccurs="0" ref="Relevance"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LocusTagPrefix"/>
+        <xs:choice>
+          <xs:element ref="RefSeq"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="UserTerm"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExternalLink">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="URL"/>
+        <xs:element ref="dbXREF"/>
+      </xs:choice>
+      <xs:attribute name="category"/>
+      <xs:attribute name="label" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="URL" type="xs:string"/>
+  <xs:element name="dbXREF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ID"/>
+      </xs:sequence>
+      <xs:attribute name="db" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Grant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Title"/>
+        <xs:element ref="Agency"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="PI"/>
+      </xs:sequence>
+      <xs:attribute name="GrantId" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Agency">
+    <xs:complexType mixed="true">
+      <xs:attribute name="abbr"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PI">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="First"/>
+        <xs:element ref="Last"/>
+        <xs:element minOccurs="0" ref="Middle"/>
+        <xs:element minOccurs="0" ref="Given"/>
+      </xs:sequence>
+      <xs:attribute name="affil"/>
+      <xs:attribute name="auth" type="xs:NCName"/>
+      <xs:attribute name="grant_user_id" type="xs:integer"/>
+      <xs:attribute name="userid"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Given" type="xs:string"/>
+  <xs:element name="Publication">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Reference"/>
+        <xs:element minOccurs="0" ref="StructuredCitation"/>
+        <xs:element ref="DbType"/>
+      </xs:sequence>
+      <xs:attribute name="date" type="xs:NMTOKEN"/>
+      <xs:attribute name="id" use="required"/>
+      <xs:attribute name="status" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Reference" type="xs:string"/>
+  <xs:element name="StructuredCitation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Title"/>
+        <xs:element ref="Journal"/>
+        <xs:element ref="AuthorSet"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Journal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="JournalTitle"/>
+        <xs:element minOccurs="0" ref="Year"/>
+        <xs:element minOccurs="0" ref="Volume"/>
+        <xs:element minOccurs="0" ref="Issue"/>
+        <xs:element minOccurs="0" ref="PagesFrom"/>
+        <xs:element minOccurs="0" ref="PagesTo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="JournalTitle" type="xs:string"/>
+  <xs:element name="Year" type="xs:integer"/>
+  <xs:element name="Volume" type="xs:string"/>
+  <xs:element name="Issue" type="xs:string"/>
+  <xs:element name="PagesFrom" type="xs:string"/>
+  <xs:element name="PagesTo" type="xs:string"/>
+  <xs:element name="AuthorSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Author"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Author">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Name"/>
+        <xs:element minOccurs="0" ref="Consortium"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Consortium" type="xs:string"/>
+  <xs:element name="DbType" type="xs:NCName"/>
+  <xs:element name="ProjectReleaseDate" type="xs:NMTOKEN"/>
+  <xs:element name="Keyword" type="xs:anyURI"/>
+  <xs:element name="Relevance">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Agricultural"/>
+        <xs:element minOccurs="0" ref="Medical"/>
+        <xs:element minOccurs="0" ref="Industrial"/>
+        <xs:element minOccurs="0" ref="Environmental"/>
+        <xs:element minOccurs="0" ref="Evolution"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="ModelOrganism"/>
+          <xs:element ref="Other"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Agricultural" type="xs:NCName"/>
+  <xs:element name="Medical" type="xs:NCName"/>
+  <xs:element name="Industrial" type="xs:NCName"/>
+  <xs:element name="Environmental" type="xs:string"/>
+  <xs:element name="Evolution" type="xs:NCName"/>
+  <xs:element name="ModelOrganism" type="xs:NCName"/>
+  <xs:element name="Other" type="xs:string"/>
+  <xs:element name="LocusTagPrefix">
+    <xs:complexType mixed="true">
+      <xs:attribute name="assembly_id"/>
+      <xs:attribute name="biosample_id"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefSeq">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="AnnotationSource"/>
+        <xs:element minOccurs="0" ref="SequenceSource"/>
+        <xs:element minOccurs="0" ref="NomenclatureSource"/>
+      </xs:sequence>
+      <xs:attribute name="representation" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AnnotationSource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Name"/>
+        <xs:element minOccurs="0" ref="Url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SequenceSource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Name"/>
+        <xs:element minOccurs="0" ref="Url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NomenclatureSource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Name"/>
+        <xs:element minOccurs="0" ref="Url"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UserTerm">
+    <xs:complexType mixed="true">
+      <xs:attribute name="category" use="required"/>
+      <xs:attribute name="term" use="required"/>
+      <xs:attribute name="units" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectType">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="ProjectTypeSubmission"/>
+        <xs:element ref="ProjectTypeTopAdmin"/>
+        <xs:element ref="ProjectTypeTopSingleOrganism"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectTypeSubmission">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Target"/>
+        <xs:element ref="Method"/>
+        <xs:element ref="Objectives"/>
+        <xs:element minOccurs="0" ref="IntendedDataTypeSet"/>
+        <xs:element minOccurs="0" ref="ProjectDataTypeSet"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Organism"/>
+        <xs:element minOccurs="0" ref="Provider"/>
+        <xs:element minOccurs="0" ref="Description"/>
+        <xs:element minOccurs="0" ref="BioSampleSet"/>
+      </xs:sequence>
+      <xs:attribute name="capture" use="required" type="xs:NCName"/>
+      <xs:attribute name="material" use="required" type="xs:NCName"/>
+      <xs:attribute name="sample_scope" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Provider" type="xs:string"/>
+  <xs:element name="BioSampleSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ID"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Method">
+    <xs:complexType mixed="true">
+      <xs:attribute name="method_type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Objectives">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Data"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data">
+    <xs:complexType mixed="true">
+      <xs:attribute name="data_type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IntendedDataTypeSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="DataType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectDataTypeSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="DataType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProjectTypeTopAdmin">
+    <xs:complexType>
+      <xs:choice minOccurs="0">
+        <xs:element ref="Organism"/>
+        <xs:element ref="DescriptionSubtypeOther"/>
+      </xs:choice>
+      <xs:attribute name="subtype" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DescriptionSubtypeOther" type="xs:string"/>
+  <xs:element name="ProjectTypeTopSingleOrganism">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Organism"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Name">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="First"/>
+        <xs:element ref="Last"/>
+        <xs:element ref="Middle"/>
+        <xs:element ref="Suffix"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Suffix" type="xs:string"/>
+  <xs:element name="Title" type="xs:string"/>
+  <xs:element name="Description" type="xs:string"/>
+  <xs:element name="ID">
+    <xs:complexType mixed="true">
+      <xs:attribute name="local_id" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="First" type="xs:string"/>
+  <xs:element name="Last" type="xs:string"/>
+  <xs:element name="Middle" type="xs:string"/>
+  <xs:element name="Url" type="xs:anyURI"/>
+  <xs:element name="Organism">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OrganismName"/>
+        <xs:element minOccurs="0" ref="Label"/>
+        <xs:element minOccurs="0" ref="Strain"/>
+        <xs:element minOccurs="0" ref="IsolateName"/>
+        <xs:element minOccurs="0" ref="Breed"/>
+        <xs:element minOccurs="0" ref="Cultivar"/>
+        <xs:element minOccurs="0" ref="Supergroup"/>
+        <xs:element minOccurs="0" ref="BiologicalProperties"/>
+        <xs:element minOccurs="0" ref="Organization"/>
+        <xs:element minOccurs="0" ref="Reproduction"/>
+        <xs:element minOccurs="0" ref="RepliconSet"/>
+        <xs:element minOccurs="0" ref="GenomeSize"/>
+      </xs:sequence>
+      <xs:attribute name="species" use="required" type="xs:integer"/>
+      <xs:attribute name="taxID" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OrganismName" type="xs:string"/>
+  <xs:element name="Label" type="xs:string"/>
+  <xs:element name="Strain" type="xs:string"/>
+  <xs:element name="IsolateName" type="xs:string"/>
+  <xs:element name="Breed" type="xs:string"/>
+  <xs:element name="Cultivar" type="xs:string"/>
+  <xs:element name="Supergroup" type="xs:NCName"/>
+  <xs:element name="BiologicalProperties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0">
+          <xs:element ref="BiologicalSample"/>
+          <xs:element ref="Morphology"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="Environment"/>
+        <xs:element minOccurs="0" ref="Phenotype"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BiologicalSample">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="CultureSample"/>
+        <xs:element ref="TissueSample"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CultureSample" type="xs:NCName"/>
+  <xs:element name="TissueSample" type="xs:string"/>
+  <xs:element name="Morphology">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Gram"/>
+        <xs:element minOccurs="0" ref="Enveloped"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Shape"/>
+        <xs:element minOccurs="0" ref="Endospores"/>
+        <xs:element minOccurs="0" ref="Motility"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Gram" type="xs:NCName"/>
+  <xs:element name="Enveloped" type="xs:NCName"/>
+  <xs:element name="Shape" type="xs:NCName"/>
+  <xs:element name="Endospores" type="xs:NCName"/>
+  <xs:element name="Motility" type="xs:NCName"/>
+  <xs:element name="Environment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Salinity"/>
+        <xs:element minOccurs="0" ref="OxygenReq"/>
+        <xs:element minOccurs="0" ref="OptimumTemperature"/>
+        <xs:element minOccurs="0" ref="TemperatureRange"/>
+        <xs:element minOccurs="0" ref="Habitat"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Salinity" type="xs:NCName"/>
+  <xs:element name="OxygenReq" type="xs:NCName"/>
+  <xs:element name="OptimumTemperature" type="xs:string"/>
+  <xs:element name="TemperatureRange" type="xs:NCName"/>
+  <xs:element name="Habitat" type="xs:NCName"/>
+  <xs:element name="Phenotype">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="BioticRelationship"/>
+        <xs:element minOccurs="0" ref="TrophicLevel"/>
+        <xs:element minOccurs="0" ref="Disease"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BioticRelationship" type="xs:NCName"/>
+  <xs:element name="TrophicLevel" type="xs:NCName"/>
+  <xs:element name="Disease" type="xs:string"/>
+  <xs:element name="Organization" type="xs:NCName"/>
+  <xs:element name="Reproduction" type="xs:NCName"/>
+  <xs:element name="RepliconSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Replicon"/>
+        <xs:element minOccurs="0" ref="Ploidy"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Count"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Replicon">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Type"/>
+        <xs:element ref="Name"/>
+        <xs:element minOccurs="0" ref="Size"/>
+        <xs:element minOccurs="0" ref="Description"/>
+      </xs:sequence>
+      <xs:attribute name="order" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Type">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NCName">
+          <xs:attribute name="location" use="required" type="xs:NCName"/>
+          <xs:attribute name="locationOtherDescr"/>
+          <xs:attribute name="typeOtherDescr"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Size">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:decimal">
+          <xs:attribute name="units" use="required" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Ploidy">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Count">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:integer">
+          <xs:attribute name="repliconType" use="required" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenomeSize">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:decimal">
+          <xs:attribute name="units" use="required" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DataType" type="xs:string"/>
+</xs:schema>
