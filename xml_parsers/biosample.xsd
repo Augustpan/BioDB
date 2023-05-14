@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="BioSampleSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="BioSample"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BioSample">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Ids"/>
+        <xs:element ref="Description"/>
+        <xs:element ref="Owner"/>
+        <xs:element ref="Models"/>
+        <xs:element ref="Package"/>
+        <xs:element ref="Attributes"/>
+        <xs:element minOccurs="0" ref="Links"/>
+        <xs:element ref="Status"/>
+        <xs:element minOccurs="0" ref="Curation"/>
+      </xs:sequence>
+      <xs:attribute name="access" use="required" type="xs:NCName"/>
+      <xs:attribute name="accession" use="required" type="xs:NCName"/>
+      <xs:attribute name="id" use="required" type="xs:integer"/>
+      <xs:attribute name="is_reference" type="xs:integer"/>
+      <xs:attribute name="last_update" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="publication_date" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="submission_date" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Ids">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Id"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Id">
+    <xs:complexType mixed="true">
+      <xs:attribute name="db"/>
+      <xs:attribute name="db_label"/>
+      <xs:attribute name="is_hidden" type="xs:integer"/>
+      <xs:attribute name="is_primary" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Description">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Synonym"/>
+        <xs:element ref="Title"/>
+        <xs:element ref="Organism"/>
+        <xs:element minOccurs="0" ref="Comment"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Synonym">
+    <xs:complexType mixed="true">
+      <xs:attribute name="db" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Title" type="xs:string"/>
+  <xs:element name="Organism">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="OrganismName"/>
+      </xs:sequence>
+      <xs:attribute name="taxonomy_id" use="required" type="xs:integer"/>
+      <xs:attribute name="taxonomy_name" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OrganismName" type="xs:string"/>
+  <xs:element name="Comment">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="Paragraph"/>
+        <xs:element ref="Table"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Paragraph" type="xs:string"/>
+  <xs:element name="Table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Caption"/>
+        <xs:element ref="Header"/>
+        <xs:element ref="Body"/>
+      </xs:sequence>
+      <xs:attribute name="class" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Caption" type="xs:string"/>
+  <xs:element name="Header">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Cell"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Body">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Row"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Row">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Cell"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Owner">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Name"/>
+        <xs:element minOccurs="0" ref="Contacts"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Contacts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Contact"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Contact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Address"/>
+        <xs:element minOccurs="0" ref="Name"/>
+      </xs:sequence>
+      <xs:attribute name="email"/>
+      <xs:attribute name="fax"/>
+      <xs:attribute name="lab"/>
+      <xs:attribute name="phone"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Address">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Street"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Street" type="xs:string"/>
+  <xs:element name="Models">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Model"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Model">
+    <xs:complexType mixed="true">
+      <xs:attribute name="version" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Package">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NCName">
+          <xs:attribute name="display_name" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Attributes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Attribute"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Attribute">
+    <xs:complexType mixed="true">
+      <xs:attribute name="attribute_name" use="required"/>
+      <xs:attribute name="display_name"/>
+      <xs:attribute name="harmonized_name" type="xs:NCName"/>
+      <xs:attribute name="unit"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Links">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Link"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Link">
+    <xs:complexType mixed="true">
+      <xs:attribute name="label"/>
+      <xs:attribute name="submission_id" type="xs:NCName"/>
+      <xs:attribute name="target"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Status">
+    <xs:complexType>
+      <xs:attribute name="status" use="required" type="xs:NCName"/>
+      <xs:attribute name="when" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Curation">
+    <xs:complexType>
+      <xs:attribute name="curation_date" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="curation_status" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Cell" type="xs:anyURI"/>
+  <xs:element name="Name">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="First"/>
+        <xs:element ref="Last"/>
+        <xs:element ref="Middle"/>
+      </xs:choice>
+      <xs:attribute name="abbreviation" type="xs:anyURI"/>
+      <xs:attribute name="url"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="First" type="xs:string"/>
+  <xs:element name="Last" type="xs:string"/>
+  <xs:element name="Middle" type="xs:string"/>
+</xs:schema>
